@@ -1,47 +1,59 @@
-jwt:
-    secret: ${JWT_SECRET_KEY}
-spring:
-    datasource:
-        url: ${DATABASE_URL}
-        username: ${DATABASE_USERNAME}
-        password: ${DATABASE_PASSWORD}
-        driver-class-name: ${DATABASE_DRIVER_NAME}
-    jpa:
-        hibernate:
-            ddl-auto: update
-        properties: 
-            hibernate:
-                dialect: ${HIBERNATE_DIALECT}
-        generate-ddl: true
-    application:
-        name: chaea
-    security:
-        oauth2:
-            client:
-                registration:
-                    google:
-                        client-id: ${GOOGLE_CLIENT_ID}
-                        client-secret: ${GOOGLE_CLIENT_SECRET}
-                        scope: profile, email
-                provider:
-                    google:
-                        authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
-                        token-uri: https://www.googleapis.com/oauth2/v4/token
-                        user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
-                        user-name-attribute: sub
-            resourceserver:
-                jwt:
-                      issuer-uri: https://accounts.google.com
-                      jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
-cors:
-  allowed-origins: ${ALLOWED_ORIGINS}
-springdoc:
-    api-docs:
-        enabled: true
-        path: /api-docs
-    swagger-ui:
-        enabled: true
-        path: /docs/swagger-ui.html
-        
 server:
-  port: ${PORT}
+  port: 9001
+
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: adelabot.noresponder@gmail.com
+    password: cayf bzhb dgtb nogh
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/group_service_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 82296007466-9a641tum32kufd180hg7p9nol7dcsglg.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+jwt:
+  secret: a6053a18613b29a2aa3407cccfe6fd47c681ed3cc7808e46392c2f0b1b2259a90e1a3f426572715f94c4ccc61aa108e3b94bb0358dbf462284091ac81cf1b94f
+
+cors:
+  allowed-origins: http://localhost:3000/
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /docs/swagger-ui.html
+
+application:
+  name: ms-grupos
