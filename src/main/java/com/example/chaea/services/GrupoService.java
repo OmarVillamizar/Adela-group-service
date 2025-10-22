@@ -2,11 +2,18 @@ package com.example.chaea.services;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.chaea.clients.UsuarioClient;
+import com.example.chaea.dto.EstudianteDTO;
+import com.example.chaea.dto.EstudianteEmailDTO;
 import com.example.chaea.dto.GrupoDTO;
+import com.example.chaea.dto.GrupoResponseDTO;
+import com.example.chaea.dto.ProfesorDTO;
 import com.example.chaea.entities.Grupo;
 import com.example.chaea.repositories.GrupoRepository;
 
@@ -19,14 +26,49 @@ public class GrupoService {
         this.grupoRepository = grupoRepository;
     }
 
-    @Transactional
-    public Grupo crearGrupo(GrupoDTO grupoDTO) {
+    public Grupo crearGrupo(GrupoDTO dto) {
         Grupo grupo = new Grupo();
-        grupo.setNombre(grupoDTO.getNombre());
-        grupo.setProfesorId(grupoDTO.getProfesorId());
-        // estudianteIds se inicializa solo, pero podrías agregar uno aquí si existiera
+        grupo.setNombre(dto.getNombre());
+        grupo.setProfesorId(dto.getProfesorEmail());
+
+        // Guardamos solo los emails
+        if (dto.getEstudiantes() != null) {
+            grupo.setEstudianteIds(
+                dto.getEstudiantes().stream()
+                    .map(EstudianteEmailDTO::getEmail)
+                    .collect(Collectors.toSet())
+            );
+        }
+
         return grupoRepository.save(grupo);
     }
+    
+    @Autowired
+    private UsuarioClient usuarioClient;
+
+    public GrupoResponseDTO mapToResponse(Grupo grupo) {
+        List<EstudianteDTO> estudiantes = grupo.getEstudianteIds().stream()
+                .map(usuarioClient::obtenerEstudiante) // Ej: usuarioClient.obtenerEstudiante(email)
+                .toList();
+
+        ProfesorDTO profesor = usuarioClient.obtenerProfesor(grupo.getProfesorId());
+
+        return new GrupoResponseDTO(
+            grupo.getId(),
+            grupo.getNombre(),
+            profesor,
+            estudiantes,
+            estudiantes.size()
+        );
+    }
+
+    public List<GrupoResponseDTO> obtenerGrupos() {
+        return grupoRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
 
     public List<Grupo> listarGrupos() {
         return grupoRepository.findAll();
@@ -49,7 +91,7 @@ public class GrupoService {
     public Grupo actualizarGrupo(int id, GrupoDTO grupoDTO) {
         return grupoRepository.findById(id).map(grupo -> {
             grupo.setNombre(grupoDTO.getNombre());
-            grupo.setProfesorId(grupoDTO.getProfesorId());
+            grupo.setProfesorId(grupoDTO.getProfesorEmail());
             return grupoRepository.save(grupo);
         }).orElse(null);
     }

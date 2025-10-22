@@ -1,4 +1,3 @@
-
 package com.example.chaea.controllers;
 
 import java.util.List;
@@ -9,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.chaea.dto.GrupoDTO;
+import com.example.chaea.dto.GrupoResponseDTO;
 import com.example.chaea.entities.Grupo;
 import com.example.chaea.services.GrupoService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/grupos")
 public class GrupoController {
 
@@ -24,20 +25,18 @@ public class GrupoController {
 
     // Crear un nuevo grupo
     @PostMapping
-    public ResponseEntity<?> crearGrupo(@RequestBody GrupoDTO grupoDTO) {
-        if (grupoDTO.getNombre() == null || grupoDTO.getProfesorId() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Faltan campos requeridos.");
-        }
-
-        Grupo nuevoGrupo = grupoService.crearGrupo(grupoDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoGrupo);
+    public GrupoResponseDTO crearGrupo(@RequestBody GrupoDTO dto) {
+        Grupo grupoGuardado = grupoService.crearGrupo(dto);
+        return grupoService.mapToResponse(grupoGuardado);
     }
 
-    // Listar todos los grupos
+
+    
     @GetMapping
-    public ResponseEntity<List<Grupo>> listarGrupos() {
-        return ResponseEntity.ok(grupoService.listarGrupos());
+    public List<GrupoResponseDTO> getGrupos() {
+        return grupoService.obtenerGrupos();
     }
+
 
     // Consultar un grupo por ID
     @GetMapping("/{id}")
