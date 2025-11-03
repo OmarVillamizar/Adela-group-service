@@ -1,17 +1,24 @@
 package com.example.adela.clients;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.example.adela.dto.EstudianteDTO;
 import com.example.adela.dto.ProfesorDTO;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.service.annotation.GetExchange;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
-@FeignClient(name = "ms-auth", url = "http://localhost:8081")
+import java.util.List;
+
+@HttpExchange("/ms-auth")
 public interface UsuarioClient {
-    @GetMapping("/api/estudiantes/{email}")
-    EstudianteDTO obtenerEstudiante(@PathVariable("email") String email);
-
-    @GetMapping("/api/profesores/{email}")
-    ProfesorDTO obtenerProfesor(@PathVariable("email") String email);
+    
+    @GetExchange("/profesores/{email}")
+    ProfesorDTO obtenerProfesor(@PathVariable String email);
+    
+    @GetExchange("/estudiantes/{email}")
+    EstudianteDTO obtenerEstudiante(@PathVariable String email);
+    
+    @GetExchange("/estudiantes")
+    List<EstudianteDTO> obtenerTodosEstudiantes();
 }

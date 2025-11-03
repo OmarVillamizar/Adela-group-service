@@ -1,15 +1,16 @@
 package com.example.adela.dto;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class GrupoResponseDTO {
+@NoArgsConstructor
+public class GrupoResumidoDTO {
     private int id;
     private String nombre;
-    private ProfesorDTO profesor;
-    private List<EstudianteDTO> estudiantes;
     private int numEstudiantes;
+    private String profesorEmail;
+    private String profesorNombre;
 }

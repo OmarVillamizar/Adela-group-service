@@ -1,21 +1,15 @@
 package com.example.adela.entities;
 
+import jakarta.persistence.*;
+import lombok.Data;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Data;
-
 @Entity
 @Data
-@Table(name = "grupo")
+@Table(name = "grupos")
 public class Grupo {
 
     @Id
@@ -25,18 +19,23 @@ public class Grupo {
     @Column(length = 100, nullable = false)
     private String nombre;
 
-    @Column(nullable = false)
-    private String profesorId; // email or id of the professor
+    // Solo guardamos el email del profesor (referencia)
+    @Column(name = "profesor_email", nullable = false, length = 100)
+    private String profesorEmail;
 
-    @ElementCollection
-    private Set<String> estudianteIds = new HashSet<>(); // emails or ids of the students
+    // Relación Many-to-Many con estudiantes (solo emails)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+        name = "grupo_estudiantes",
+        joinColumns = @JoinColumn(name = "grupo_id")
+    )
+    @Column(name = "estudiante_email", length = 100)
+    private Set<String> estudiantesEmails = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Grupo))
-            return false;
+        if (this == o) return true;
+        if (!(o instanceof Grupo)) return false;
         Grupo grupo = (Grupo) o;
         return getId() == grupo.getId();
     }

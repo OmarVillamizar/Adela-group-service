@@ -1,17 +1,19 @@
 
 package com.example.adela.repositories;
 
-import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.example.adela.entities.Grupo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
+@Repository
 public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
-
-    // Find groups by professor ID
-    List<Grupo> findByProfesorId(String profesorId);
-
-    // Find groups containing a specific student ID
-    List<Grupo> findByEstudianteIdsContaining(String estudianteId);
+    
+    List<Grupo> findByNombre(String nombre);
+    
+    List<Grupo> findByProfesorEmail(String profesorEmail);
+    
+    Optional<Grupo> findByProfesorEmailAndId(String profesorEmail, int id);
 }
