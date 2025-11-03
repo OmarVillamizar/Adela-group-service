@@ -1,4 +1,4 @@
-package com.example.chaea.controllers;
+package com.example.adela.controllers;
 
 import java.util.List;
 import java.util.Set;
@@ -7,10 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.chaea.dto.GrupoDTO;
-import com.example.chaea.dto.GrupoResponseDTO;
-import com.example.chaea.entities.Grupo;
-import com.example.chaea.services.GrupoService;
+import com.example.adela.dto.GrupoDTO;
+import com.example.adela.dto.GrupoResponseDTO;
+import com.example.adela.entities.Grupo;
+import com.example.adela.services.GrupoService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -79,9 +79,9 @@ public class GrupoController {
     }
 
     // Eliminar estudiantes de un grupo
-    @DeleteMapping("/{id}/estudiantes")
-    public ResponseEntity<?> eliminarEstudiantesDelGrupo(@PathVariable int id, @RequestBody Set<String> estudianteIds) {
-        Grupo grupo = grupoService.eliminarEstudiantesDelGrupo(id, estudianteIds);
+    @DeleteMapping("/{id}/estudiantes/{estudianteId}")
+    public ResponseEntity<?> eliminarEstudiantesDelGrupo(@PathVariable int id, @PathVariable String estudianteId) {
+        Grupo grupo = grupoService.eliminarEstudiantesDelGrupo(id, estudianteId);
         if (grupo == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Grupo no encontrado con el ID: " + id);
         }

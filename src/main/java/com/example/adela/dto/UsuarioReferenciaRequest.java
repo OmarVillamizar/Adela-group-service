@@ -1,7 +1,8 @@
-package com.example.chaea.dto;
+package com.example.adela.dto;
 
 
-import com.example.chaea.enums.TipoUsuario;
+import com.example.adela.enums.TipoUsuario;
+
 import lombok.Data;
 
 @Data

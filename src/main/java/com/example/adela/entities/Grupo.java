@@ -1,4 +1,4 @@
-package com.example.chaea.entities;
+package com.example.adela.entities;
 
 import java.util.HashSet;
 import java.util.Objects;

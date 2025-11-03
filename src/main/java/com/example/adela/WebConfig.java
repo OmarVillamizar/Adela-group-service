@@ -1,4 +1,4 @@
-package com.example.chaea;
+package com.example.adela;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
+/*
     @Value("${cors.allowed-origins}")
     private String allowedOrigins;
 
@@ -63,4 +63,5 @@ public class WebConfig implements WebMvcConfigurer {
         
         return source;
     }
+*/
 }

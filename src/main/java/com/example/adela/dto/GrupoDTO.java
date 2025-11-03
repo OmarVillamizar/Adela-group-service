@@ -1,4 +1,4 @@
-package com.example.chaea.dto;
+package com.example.adela.dto;
 
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GrupoDTO {
+    private Integer id; // <-- agregar este campo
     private String nombre;
     private String profesorEmail;
     private Set<EstudianteEmailDTO> estudiantes;

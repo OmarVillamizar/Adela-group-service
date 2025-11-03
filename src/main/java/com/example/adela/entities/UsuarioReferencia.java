@@ -1,6 +1,7 @@
-package com.example.chaea.entities;
+package com.example.adela.entities;
 
-import com.example.chaea.enums.TipoUsuario;
+import com.example.adela.enums.TipoUsuario;
+
 import jakarta.persistence.*;
 import lombok.*;
 

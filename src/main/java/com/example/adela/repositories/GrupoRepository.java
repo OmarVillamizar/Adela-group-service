@@ -1,10 +1,11 @@
 
-package com.example.chaea.repositories;
+package com.example.adela.repositories;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.chaea.entities.Grupo;
+
+import com.example.adela.entities.Grupo;
 
 public interface GrupoRepository extends JpaRepository<Grupo, Integer> {
 

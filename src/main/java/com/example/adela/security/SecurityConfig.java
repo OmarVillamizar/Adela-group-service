@@ -1,4 +1,4 @@
-package com.example.chaea.security;
+package com.example.adela.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

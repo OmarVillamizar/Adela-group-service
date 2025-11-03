@@ -1,4 +1,4 @@
-package com.example.chaea.services;
+package com.example.adela.services;
 
 import java.util.List;
 import java.util.Set;
@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.chaea.clients.UsuarioClient;
-import com.example.chaea.dto.EstudianteDTO;
-import com.example.chaea.dto.EstudianteEmailDTO;
-import com.example.chaea.dto.GrupoDTO;
-import com.example.chaea.dto.GrupoResponseDTO;
-import com.example.chaea.dto.ProfesorDTO;
-import com.example.chaea.entities.Grupo;
-import com.example.chaea.repositories.GrupoRepository;
+import com.example.adela.clients.UsuarioClient;
+import com.example.adela.dto.EstudianteDTO;
+import com.example.adela.dto.EstudianteEmailDTO;
+import com.example.adela.dto.GrupoDTO;
+import com.example.adela.dto.GrupoResponseDTO;
+import com.example.adela.dto.ProfesorDTO;
+import com.example.adela.entities.Grupo;
+import com.example.adela.repositories.GrupoRepository;
 
 @Service
 public class GrupoService {
@@ -107,10 +107,10 @@ public class GrupoService {
     }
 
     @Transactional
-    public Grupo eliminarEstudiantesDelGrupo(int id, Set<String> estudianteIds) {
+    public Grupo eliminarEstudiantesDelGrupo(int id, String estudianteId) {
         return grupoRepository.findById(id).map(grupo -> {
-            if (estudianteIds != null && !estudianteIds.isEmpty()) {
-                grupo.getEstudianteIds().removeAll(estudianteIds);
+            if (estudianteId != null && !estudianteId.isEmpty()) {
+                grupo.getEstudianteIds().remove(estudianteId);
             }
             return grupoRepository.save(grupo);
         }).orElse(null);
