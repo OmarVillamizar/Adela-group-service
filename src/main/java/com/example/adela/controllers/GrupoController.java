@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.adela.clients.UsuarioClient;
 import com.example.adela.dto.*;
 import com.example.adela.entities.Grupo;
 import com.example.adela.repositories.GrupoRepository;
@@ -31,6 +32,9 @@ public class GrupoController {
     
     @Autowired
     private UsuarioService usuarioService;
+    
+    @Autowired
+    private UsuarioClient usuarioClient;
     
     @PostMapping
     @PreAuthorize("hasRole('PROFESOR') or hasRole('ADMINISTRADOR')")
@@ -61,15 +65,12 @@ public class GrupoController {
             Set<String> estudiantesEmails = new HashSet<>();
             
             if (grupoDTO.getEstudiantes() != null) {
-                for (EstudianteCrearDTO estudianteDTO : grupoDTO.getEstudiantes()) {
-                    String email = estudianteDTO.getEmail();
-                    
-                    // Verificar si el estudiante existe (opcional, según tu lógica)
-                    // En el monolito creabas estudiantes si no existían
-                    // Aquí podrías hacer lo mismo o solo validar que existan
-                    
-                    estudiantesEmails.add(email);
-                }
+            	 try {
+						estudiantesEmails = usuarioClient.crearCascaras(grupoDTO.getEstudiantes()).stream()
+								.map(e -> e.getEmail()).collect(Collectors.toSet());
+                 } catch (Exception e) {
+                     throw new RuntimeException("Error al crear estudiantes desde ms-auth: " + e.getMessage(), e);
+                 }
             }
             
             nuevoGrupo.setEstudiantesEmails(estudiantesEmails);
@@ -200,7 +201,7 @@ public class GrupoController {
     @PostMapping("/{id}/estudiantes")
     @PreAuthorize("hasRole('PROFESOR') or hasRole('ADMINISTRADOR')")
     public ResponseEntity<?> agregarEstudiantesAlGrupo(@PathVariable int id,
-                                                      @RequestBody List<String> emails) {
+                                                      @RequestBody List<EstudianteCrearDTO> cascaras) {
         try {
             // Obtener el email del profesor de la autenticación de forma segura
             String profesorEmail = SecurityContextHolder.getContext()
@@ -216,27 +217,20 @@ public class GrupoController {
 
             Grupo grupo = grupoOptional.get();
 
-            // Verificar que los estudiantes existen en ms-auth (opcional)
-            List<String> emailsNoEncontrados = new ArrayList<>();
 
-            for (String email : emails) {
+
+            
                 try {
-                    EstudianteDTO estudiante = usuarioService.obtenerEstudiante(email);
-                    if (estudiante != null) {
-                        // CORRECCIÓN: solo añadir el email (no anidar add)
-                        grupo.getEstudiantesEmails().add(email);
-                    } else {
-                        emailsNoEncontrados.add(email);
-                    }
+                	usuarioClient.crearCascaras(cascaras);
+					// Agregar solo los emails que no están ya en el grupo
+					for (EstudianteCrearDTO e : cascaras) {
+						grupo.getEstudiantesEmails().add(e.getEmail());
+					}
                 } catch (Exception e) {
-                    emailsNoEncontrados.add(email);
+                    throw new RuntimeException("Error al crear estudiantes desde ms-auth: " + e.getMessage(), e);
                 }
-            }
+            
 
-            if (!emailsNoEncontrados.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("Estudiantes no encontrados con los correos: " + emailsNoEncontrados);
-            }
 
             Grupo guardado = grupoRepository.save(grupo);
             return ResponseEntity.ok(guardado);
