@@ -1,4 +1,4 @@
-package com.example.adela.dto;
+package com.example.chaea.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

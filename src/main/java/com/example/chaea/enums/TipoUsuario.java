@@ -1,4 +1,4 @@
-package com.example.adela.enums;
+package com.example.chaea.enums;
 
 public enum TipoUsuario {
     ESTUDIANTE,

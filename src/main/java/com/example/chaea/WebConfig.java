@@ -1,4 +1,4 @@
-package com.example.adela;
+package com.example.chaea;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

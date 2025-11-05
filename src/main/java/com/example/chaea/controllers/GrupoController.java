@@ -1,4 +1,4 @@
-package com.example.adela.controllers;
+package com.example.chaea.controllers;
 
 import java.util.List;
 import java.util.Set;
@@ -7,11 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.adela.clients.UsuarioClient;
-import com.example.adela.dto.*;
-import com.example.adela.entities.Grupo;
-import com.example.adela.repositories.GrupoRepository;
-import com.example.adela.services.UsuarioService;
+import com.example.chaea.clients.UsuarioClient;
+import com.example.chaea.dto.*;
+import com.example.chaea.entities.Grupo;
+import com.example.chaea.repositories.GrupoRepository;
+import com.example.chaea.services.UsuarioService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

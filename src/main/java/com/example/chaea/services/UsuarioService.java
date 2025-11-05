@@ -1,10 +1,11 @@
-package com.example.adela.services;
+package com.example.chaea.services;
 
-import com.example.adela.clients.UsuarioClient;
-import com.example.adela.dto.EstudianteDTO;
-import com.example.adela.dto.ProfesorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.chaea.clients.UsuarioClient;
+import com.example.chaea.dto.EstudianteDTO;
+import com.example.chaea.dto.ProfesorDTO;
 
 import java.util.List;
 

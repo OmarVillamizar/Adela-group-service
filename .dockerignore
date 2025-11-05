@@ -1,0 +1,29 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de logs o temporales
+*.log
+*.tmp
+*.swp
+
+# Control de versiones
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Archivos de entorno (por seguridad)
+.env

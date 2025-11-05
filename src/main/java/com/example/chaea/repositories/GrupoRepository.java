@@ -1,9 +1,10 @@
 
-package com.example.adela.repositories;
+package com.example.chaea.repositories;
 
-import com.example.adela.entities.Grupo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.example.chaea.entities.Grupo;
 
 import java.util.List;
 import java.util.Optional;

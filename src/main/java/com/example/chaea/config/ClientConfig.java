@@ -1,6 +1,5 @@
-package com.example.adela.config;
+package com.example.chaea.config;
 
-import com.example.adela.clients.UsuarioClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +10,9 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
+
+import com.example.chaea.clients.UsuarioClient;
+
 import reactor.core.publisher.Mono;
 
 @Configuration

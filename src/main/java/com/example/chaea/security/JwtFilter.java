@@ -1,4 +1,4 @@
-package com.example.adela.security;
+package com.example.chaea.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;

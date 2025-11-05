@@ -1,4 +1,4 @@
-package com.example.adela.entities;
+package com.example.chaea.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
