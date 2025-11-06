@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/grupos")
 public class GrupoController {
 
+	@Autowired
     private MailSenderClient mailSenderClient;
     
     @Autowired
@@ -231,7 +232,7 @@ public class GrupoController {
                         EmailRequest correo = new EmailRequest();
                         correo.setTo(e.getEmail());
                         correo.setSubject("Bienvenido a Adela");
-                        correo.setBody("Hola " + e.getNombre() + ", tu registro en el grupo fue exitoso.");
+                        correo.setBody("Hola " + e.getNombre() + ", tu registro en el grupo "+ grupo.getNombre() +" fue exitoso.");
 
                         mailSenderClient.sendMail(correo);
 					}
