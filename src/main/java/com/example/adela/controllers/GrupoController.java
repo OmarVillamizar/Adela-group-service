@@ -1,8 +1,5 @@
 package com.example.adela.controllers;
 
-import java.util.List;
-import java.util.Set;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.adela.clients.UsuarioClient;
 import com.example.adela.dto.*;
 import com.example.adela.entities.Grupo;
+import com.example.adela.feign.EmailRequest;
 import com.example.adela.repositories.GrupoRepository;
 import com.example.adela.services.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,12 +18,17 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.adela.feign.EmailRequest;
+import com.example.adela.feign.MailSenderClient;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/grupos")
 public class GrupoController {
+
+    private MailSenderClient mailSenderClient;
     
     @Autowired
     private GrupoRepository grupoRepository;
@@ -225,6 +228,12 @@ public class GrupoController {
 					// Agregar solo los emails que no están ya en el grupo
 					for (EstudianteCrearDTO e : cascaras) {
 						grupo.getEstudiantesEmails().add(e.getEmail());
+                        EmailRequest correo = new EmailRequest();
+                        correo.setTo(e.getEmail());
+                        correo.setSubject("Bienvenido a Adela");
+                        correo.setBody("Hola " + e.getNombre() + ", tu registro en el grupo fue exitoso.");
+
+                        mailSenderClient.sendMail(correo);
 					}
                 } catch (Exception e) {
                     throw new RuntimeException("Error al crear estudiantes desde ms-auth: " + e.getMessage(), e);
