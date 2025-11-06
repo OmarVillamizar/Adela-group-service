@@ -11,9 +11,9 @@
     </parent>
     
     <groupId>com.example</groupId>
-    <artifactId>chaea</artifactId>
+    <artifactId>adela</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>chaea</name>
+    <name>adela</name>
     <description>REST API para automatización de perfiles de aprendizaje </description>
     <url />
     <licenses>
@@ -185,7 +185,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.example.chaea.ChaeaApplication</mainClass>
+                    <mainClass>com.example.adela.ChaeaApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
